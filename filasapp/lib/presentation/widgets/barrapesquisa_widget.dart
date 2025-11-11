@@ -18,7 +18,10 @@ class BarraPesquisaWidget extends StatelessWidget {
         width: 355,
         child: TextField(
           decoration: InputDecoration(
-            prefixIcon: Icon(Icons.search, color: Colors.grey),
+            prefixIcon: Icon(
+              Icons.search,
+              color: Color.fromARGB(255, 73, 152, 180),
+            ),
             filled: true,
             fillColor: const Color.fromARGB(255, 242, 242, 242),
             enabledBorder: border,

@@ -3,6 +3,7 @@ import 'package:filasapp/presentation/widgets/estabelecimentocard_widget.dart';
 import 'package:filasapp/presentation/widgets/filterbutton_widget.dart';
 import 'package:filasapp/presentation/widgets/orderbutton_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -13,6 +14,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(title: Text('Projeto'), centerTitle: true),
       body: Column(
         children: [
+          SizedBox(height: 20),
           BarraPesquisaWidget(),
           SizedBox(height: 10),
           SizedBox(
@@ -28,18 +30,18 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 8),
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: const EdgeInsets.only(left: 11),
-              child: Text('Estabelecimentos próximos a você'),
+              child: Text('Locais próximos a você', style: GoogleFonts.alata()),
             ),
           ),
-          EstabelecimentoCardWidget(
-            nome: 'nome',
+          LocalCardWidget(
+            nome: 'PERN - Defensoria Pública do Estado do Rio Grande do Norte',
             distancia: 13,
-            movimento: 'movimento',
+            movimento: 'Alto',
             imagem: 'imagem',
           ),
         ],

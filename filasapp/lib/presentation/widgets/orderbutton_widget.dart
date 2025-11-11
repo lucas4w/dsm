@@ -1,33 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class OrderButtonWidget extends StatelessWidget {
   const OrderButtonWidget({super.key});
 
-  final List<String> _opcoes = const [
-    'Opção 1',
-    'Opção 2',
-    'Opção 3',
-    'Opção 4',
-  ];
-
   @override
   Widget build(BuildContext context) {
-    String? selectedOption;
-
     return Padding(
-      padding: const EdgeInsets.only(right: 15),
-      child: DropdownButton<String>(
-        value: selectedOption,
-        hint: Text('Ordenar'),
-        onChanged: (String? newValue) {
-          selectedOption = newValue;
-        },
-        items: _opcoes.map<DropdownMenuItem<String>>((String opcao) {
-          return DropdownMenuItem<String>(value: opcao, child: Text(opcao));
-        }).toList(),
-        underline: Container(),
-        icon: Icon(Icons.keyboard_arrow_down),
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+      padding: const EdgeInsets.only(right: 8),
+      child: ActionChip(
+        label: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Ordenar', style: GoogleFonts.montserrat()),
+            SizedBox(width: 5), // espaçamento entre texto e ícone
+            Icon(Icons.keyboard_arrow_down, size: 18),
+          ],
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        labelStyle: GoogleFonts.montserrat(fontSize: 15),
       ),
     );
   }
