@@ -12,13 +12,12 @@ class OrderButtonWidget extends StatelessWidget {
         label: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Ordenar', style: GoogleFonts.montserrat()),
-            SizedBox(width: 5), // espaçamento entre texto e ícone
-            Icon(Icons.keyboard_arrow_down, size: 18),
+            Text('Ordenar', style: GoogleFonts.alata(fontSize: 12)),
+            SizedBox(width: 5),
+            Icon(Icons.keyboard_arrow_down, size: 15),
           ],
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        labelStyle: GoogleFonts.montserrat(fontSize: 15),
       ),
     );
   }

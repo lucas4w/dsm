@@ -10,9 +10,8 @@ class FilterButtonWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 8),
       child: ActionChip(
-        label: Text(texto, style: GoogleFonts.montserrat()),
+        label: Text(texto, style: GoogleFonts.alata(fontSize: 12)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        labelStyle: GoogleFonts.montserrat(fontSize: 15),
       ),
     );
   }

@@ -6,6 +6,7 @@ class LocalCardWidget extends StatelessWidget {
   final double distancia;
   final String movimento;
   final String imagem;
+  final String tipo;
 
   const LocalCardWidget({
     super.key,
@@ -13,21 +14,56 @@ class LocalCardWidget extends StatelessWidget {
     required this.distancia,
     required this.movimento,
     required this.imagem,
+    required this.tipo,
   });
 
   Color getIconColor(String movimento) {
     const colorMap = {
-      'Médio': Color.fromARGB(255, 235, 219, 8),
+      'Médio': Color.fromARGB(255, 255, 230, 0),
       'Baixo': Color.fromARGB(213, 109, 236, 5),
       'Alto': Color.fromARGB(255, 231, 67, 17),
     };
     return colorMap[movimento] ?? Colors.black;
   }
 
+  Widget _buildCircularAvatar(String imageUrl) {
+    return Container(
+      padding: const EdgeInsets.all(0.8),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: const Color.fromARGB(255, 73, 152, 180),
+      ),
+      child: CircleAvatar(
+        radius: 37,
+        backgroundColor: Colors.grey.shade200,
+        backgroundImage: NetworkImage(imageUrl),
+      ),
+    );
+  }
+
+  Widget _buildSquareAvatar(String imageUrl) {
+    return Container(
+      padding: const EdgeInsets.all(0.8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(13),
+        color: const Color.fromARGB(255, 73, 152, 180),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          width: 73,
+          height: 73,
+          color: Colors.grey.shade200,
+          child: Image.network(imageUrl, fit: BoxFit.cover),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 11),
+      padding: EdgeInsets.only(top: 6),
       width: double.infinity,
       child: Card(
         color: Colors.transparent,
@@ -36,12 +72,9 @@ class LocalCardWidget extends StatelessWidget {
           padding: EdgeInsetsGeometry.only(left: 5),
           child: Row(
             children: [
-              CircleAvatar(
-                radius: 37,
-                backgroundImage: NetworkImage(
-                  'https://www.defensoria.rn.def.br/media/db_legado_extracoes/2017-09/Defensoria-P%C3%BAblica-do-RN.jpg',
-                ),
-              ),
+              tipo == 'Estabelecimento'
+                  ? _buildCircularAvatar(imagem)
+                  : _buildSquareAvatar(imagem),
               Column(
                 children: [
                   Container(
