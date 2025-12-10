@@ -1,4 +1,7 @@
+import 'package:filasapp/core/theme/app_theme.dart';
+import 'package:filasapp/presentation/pages/filas_page.dart';
 import 'package:filasapp/presentation/pages/home_page.dart';
+import 'package:filasapp/presentation/pages/organization_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,11 +15,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: HomePage(),
+      theme: AppTheme.theme,
+      initialRoute: "/",
+      routes: {
+        "/": (context) {
+          return const HomePage();
+        },
+        "/filas": (context) {
+          return const FilasPage();
+        },
+        "/organization": (context) {
+          return const OrganizationPage();
+        },
+      },
     );
   }
 }

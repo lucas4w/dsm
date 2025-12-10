@@ -1,18 +1,55 @@
+import 'package:filasapp/presentation/args/args.dart';
 import 'package:filasapp/presentation/widgets/barrapesquisa_widget.dart';
 import 'package:filasapp/presentation/widgets/localcard_widget.dart';
 import 'package:filasapp/presentation/widgets/filterbutton_widget.dart';
 import 'package:filasapp/presentation/widgets/orderbutton_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:filasapp/presentation/data/locais.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<LocalBase> locaisProximos = locais;
+
+  final List<LocalBase> _locaisOriginais = locais;
+
+  String? _filtroMovimentoAtivo;
+
+  void alternarFiltroMovimento(String movimento) {
+    setState(() {
+      // Se clicou no mesmo que já estava ativo → desativa
+      if (_filtroMovimentoAtivo == movimento) {
+        _filtroMovimentoAtivo = null;
+      } else {
+        _filtroMovimentoAtivo = movimento;
+      }
+
+      // Aplica o filtro (ou mostra todos)
+      if (_filtroMovimentoAtivo == null) {
+        locaisProximos = _locaisOriginais; // volta ao original
+      } else {
+        locaisProximos = _locaisOriginais.where((local) {
+          // Só filtramos Estabelecimentos que têm a propriedade movimento
+          if (local is! Estabelecimento) return false;
+
+          return local.movimento == _filtroMovimentoAtivo;
+        }).toList();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Projeto'), centerTitle: true),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: 20),
           BarraPesquisaWidget(),
@@ -24,9 +61,18 @@ class HomePage extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 12),
               children: [
                 OrderButtonWidget(),
-                FilterButtonWidget(texto: 'Filtro 1'),
-                FilterButtonWidget(texto: 'Filtro 2'),
-                FilterButtonWidget(texto: 'Filtro 3'),
+                FilterButtonWidget(
+                  texto: 'Movimento Baixo',
+                  onPressed: () => alternarFiltroMovimento('Baixo'),
+                ),
+                FilterButtonWidget(
+                  texto: 'Movimento Médio',
+                  onPressed: () => alternarFiltroMovimento('Médio'),
+                ),
+                FilterButtonWidget(
+                  texto: 'Movimento Alto',
+                  onPressed: () => alternarFiltroMovimento('Alto'),
+                ),
               ],
             ),
           ),
@@ -45,46 +91,8 @@ class HomePage extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                LocalCardWidget(
-                  nome: 'PERN - Defensoria Pública do RN',
-                  distancia: 0.7,
-                  movimento: 'Baixo',
-                  imagem:
-                      'https://www.defensoria.rn.def.br/media/db_legado_extracoes/2017-09/Defensoria-P%C3%BAblica-do-RN.jpg',
-                  tipo: 'Estabelecimento',
-                ),
-                LocalCardWidget(
-                  nome: 'NuBus Natal',
-                  distancia: 2.7,
-                  movimento: 'Alto',
-                  imagem:
-                      'https://play-lh.googleusercontent.com/r03wjilB0-1PtSjj-PaLlVHMB73E4ALgBjgxjDJOiRO9x_ro1REbtm2015bqolfKq8g=w240-h480-rw',
-                  tipo: 'Organizacao',
-                ),
-                LocalCardWidget(
-                  nome: 'Central do Cidadão - Alecrim',
-                  distancia: 4.9,
-                  movimento: 'Alto',
-                  imagem:
-                      'https://lh3.googleusercontent.com/proxy/ZQd8pb0Mv0r-Ogbv0fmjDiTQCCtMSvJ13T0dVTqUP-9JcNnrBONV2jYJQxjoumNmyJNSso8i29K3-CCB5FGfslMOcsK1OU9DlmlisMRlnc9zuw',
-                  tipo: 'Organização',
-                ),
-                LocalCardWidget(
-                  nome: 'Cartório 2º Oficio de Notas',
-                  distancia: 3.1,
-                  movimento: 'Médio',
-                  imagem:
-                      'https://lh3.googleusercontent.com/p/AF1QipM6-K1ueeZdv67APiLvR8MnzfEgZ8FoD4MXICKU=w408-h306-k-no',
-                  tipo: 'Estabelecimento',
-                ),
-                LocalCardWidget(
-                  nome: 'Hospital Maternidade Belarmina Monte',
-                  distancia: 13.1,
-                  movimento: 'Alto',
-                  imagem:
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPBH0DfuyHMavs1hGNxg3ZNyvjpRU5XUCYYA&s',
-                  tipo: 'Estabelecimento',
-                ),
+                for (LocalBase local in locaisProximos)
+                  LocalCardWidget(local: local),
               ],
             ),
           ),

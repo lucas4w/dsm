@@ -1,11 +1,9 @@
+import 'package:filasapp/core/theme/pallete.dart';
 import 'package:flutter/material.dart';
 
 final border = OutlineInputBorder(
   borderRadius: BorderRadius.circular(10),
-  borderSide: const BorderSide(
-    color: Color.fromARGB(255, 242, 242, 242),
-    width: 0,
-  ),
+  borderSide: const BorderSide(color: Colors.transparent, width: 0),
 );
 
 class BarraPesquisaWidget extends StatelessWidget {
@@ -18,12 +16,9 @@ class BarraPesquisaWidget extends StatelessWidget {
         width: 355,
         child: TextField(
           decoration: InputDecoration(
-            prefixIcon: Icon(
-              Icons.search,
-              color: Color.fromARGB(255, 73, 152, 180),
-            ),
+            prefixIcon: Icon(Icons.search, color: AppPallete.primary),
             filled: true,
-            fillColor: const Color.fromARGB(255, 242, 242, 242),
+            fillColor: const Color.fromARGB(255, 230, 230, 230),
             enabledBorder: border,
             focusedBorder: border,
           ),
